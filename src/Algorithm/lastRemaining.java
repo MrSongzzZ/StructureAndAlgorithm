@@ -52,12 +52,18 @@ public class lastRemaining {
 //            }
 //        }
 //        return 0;
-        int[] temp = new int[n + 1];
-        temp[1] = 0;
-        for (int i = 2; i < n + 1; i++) {
-            temp[i] = (temp[i - 1] + m) % i;
+//        int[] temp = new int[n + 1];
+//        temp[1] = 0;
+//        for (int i = 2; i < n + 1; i++) {
+//            temp[i] = (temp[i - 1] + m) % i;
+//        }
+//        return temp[n];
+
+        int ret = 0;
+        for (int i = 2; i <= n; i++) {
+            ret = (ret + m) % i;
         }
-        return temp[n];
+        return ret;
     }
 
     public static void main(String[] args) {
