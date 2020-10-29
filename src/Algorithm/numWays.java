@@ -42,6 +42,7 @@ public class numWays {
             a = temp;
             n--;
         }
+
         return result;
 
 //        if (n == 0 || n == 1) {
