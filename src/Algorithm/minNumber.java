@@ -27,6 +27,9 @@ import java.util.StringJoiner;
  *
  * 输出结果可能非常大，所以你需要返回一个字符串而不是整数
  * 拼接起来的数字可能会有前导 0，最后结果不需要去掉前导 0
+ * 来源：力扣（LeetCode）
+ * 链接：https://leetcode-cn.com/problems/yong-liang-ge-zhan-shi-xian-dui-lie-lcof
+ * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 public class minNumber {
 
