@@ -42,29 +42,55 @@ public class buildTree {
      * }
      */
 
-    public static TreeNode buildTree(int[] preorder, int[] inorder) {
-        if (preorder.length == 0) {
+//    public static TreeNode buildTree(int[] preorder, int[] inorder) {
+//        if (preorder.length == 0) {
+//            return null;
+//        }
+//        if (preorder.length == 1) {
+//            return new TreeNode(preorder[0]);
+//        }
+//        int root = preorder[0];
+//        int index = 0;
+//        for (int i = 0; i < inorder.length; i++) {
+//            if (inorder[i] == root) {
+//                index = i;
+//                break;
+//            }
+//        }
+//        int[] leftIn = Arrays.copyOfRange(inorder, 0, index);
+//        int[] rightIn = Arrays.copyOfRange(inorder, index + 1, inorder.length);
+//        int[] leftPre = Arrays.copyOfRange(preorder, 1, 1 + leftIn.length);
+//        int[] rightPre = Arrays.copyOfRange(preorder, 1 + leftIn.length, preorder.length);
+//        TreeNode node = new TreeNode(root);
+//        node.left = buildTree(leftPre, leftIn);
+//        node.right = buildTree(rightPre, rightIn);
+//        return node;
+//    }
+    public static TreeNode build(int[] preorder, int startPre, int endPre, int[] inorder, int startIn, int endIn) {
+        if (endPre == startPre) {
             return null;
         }
-        if (preorder.length == 1) {
-            return new TreeNode(preorder[0]);
+
+        if (endPre - startPre == 1) {
+            return new TreeNode(preorder[startPre]);
         }
-        int root = preorder[0];
-        int index = 0;
-        for (int i = 0; i < inorder.length; i++) {
-            if (inorder[i] == root) {
+
+        int root = preorder[startPre];
+        int index = startIn;
+        for (int i = startIn; i < endIn; i++) {
+            if (inorder[i] == preorder[startPre]) {
                 index = i;
                 break;
             }
         }
-        int[] leftIn = Arrays.copyOfRange(inorder, 0, index);
-        int[] rightIn = Arrays.copyOfRange(inorder, index + 1, inorder.length);
-        int[] leftPre = Arrays.copyOfRange(preorder, 1, 1 + leftIn.length);
-        int[] rightPre = Arrays.copyOfRange(preorder, 1 + leftIn.length, preorder.length);
         TreeNode node = new TreeNode(root);
-        node.left = buildTree(leftPre, leftIn);
-        node.right = buildTree(rightPre, rightIn);
+        node.left = build(preorder, startPre + 1, startPre + 1 + index - startIn, inorder, startIn, index);
+        node.right = build(preorder, startPre + 1 + index - startIn, endPre, inorder, index + 1, endIn);
         return node;
+    }
+
+    public static TreeNode buildTree(int[] preorder, int[] inorder) {
+        return build(preorder, 0, preorder.length, inorder, 0, inorder.length);
     }
 
     public static void main(String[] args) {
