@@ -1,5 +1,7 @@
 package Algorithm;
 
+import javafx.util.Pair;
+
 import java.util.Stack;
 
 /**
@@ -45,14 +47,28 @@ public class Effectivebrackets {
         return true;
     }
 
+    /**
+     * 基础算法题 测算温度最大值
+     * @param temperature
+     * @return
+     */
     private static int[] temperature(int[] temperature) {
+        Stack<Pair<Integer, Integer>> pairs = new Stack<>();
         int[] result = new int[temperature.length];
-        
+        for (int i = 0; i < temperature.length; i++) {
+            while (!pairs.isEmpty() && pairs.peek().getKey() < temperature[i]) {
+                Pair<Integer, Integer> temp = pairs.pop();
+                result[temp.getValue()] = i - temp.getValue();
+            }
+
+            pairs.push(new Pair<Integer, Integer>(temperature[i], i));
+        }
         return result;
     }
 
     public static void main(String[] args) {
         System.out.println(check("(())()()()(){{{}}}"));
         System.out.println(check("{{}{}{}}}}"));
+        System.out.println(temperature(new int[]{23, 24, 25, 21, 19, 22, 26, 23}));
     }
 }
