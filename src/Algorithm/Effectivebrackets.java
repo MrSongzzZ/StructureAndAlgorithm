@@ -45,6 +45,12 @@ public class Effectivebrackets {
         return true;
     }
 
+    private static int[] temperature(int[] temperature) {
+        int[] result = new int[temperature.length];
+        
+        return result;
+    }
+
     public static void main(String[] args) {
         System.out.println(check("(())()()()(){{{}}}"));
         System.out.println(check("{{}{}{}}}}"));
