@@ -1,5 +1,8 @@
 package Algorithm;
 
+/**
+ * 删除链表中指定节点 不改变链表结构
+ */
 public class deleteNode {
 
     public ListNode deleteNode(ListNode head, int val) {
