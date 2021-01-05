@@ -1,5 +1,8 @@
 package Algorithm;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 请从字符串中找出一个最长的不包含重复字符的子字符串，计算该最长子字符串的长度。
  * 示例 1:
@@ -26,20 +29,17 @@ package Algorithm;
 public class lengthOfLongestSubstring {
 
     public static int lengthOfLongestSubstring(String s) {
-        int l = 0;
-        int r = 0;
-        int max = 0;
-        while (r < s.length()) {
-            int index = s.indexOf(s.charAt(r) + "", l);
-            if (index >= l && index < r) {
-                max = Math.max(max, r - l);
-                l = s.indexOf(s.charAt(r) + "", l) + 1;
-            } else {
-                max = Math.max(max, r - l + 1);
-                r += 1;
-            }
+        Map<Character, Integer> map = new HashMap<>();
+        int temp = 0;
+        int res = 0;
+        for (int i = 0; i < s.toCharArray().length; i++) {
+            char c = s.charAt(i);
+            int index = map.getOrDefault(c, -1);
+            map.put(c, i);
+            temp = temp < i - index ? temp + 1 : i - index;
+            res = Math.max(res, temp);
         }
-        return max;
+        return res;
     }
 
     public static void main(String[] args) {
@@ -54,6 +54,8 @@ public class lengthOfLongestSubstring {
 
 /**
  * 动态规划+哈希表
+ *
+ * 从左向右遍历 通过hash表依次求得 已右边界结尾的最长不重复字符串（因为hash表中会存左边存在的那个重复字符，所以很简单）
  * class Solution {
  *     public int lengthOfLongestSubstring(String s) {
  *         Map<Character, Integer> dic = new HashMap<>();
