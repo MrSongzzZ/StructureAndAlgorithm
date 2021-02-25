@@ -36,41 +36,27 @@ import java.util.List;
  */
 public class isValidBST {
 
-    public static boolean check(TreeNode root, List<Integer> min, List<Integer> max) {
+    public static boolean check(TreeNode root, Integer min, Integer max) {
         if (min != null) {
-            for (Integer integer : min) {
-                if (root.val >= integer) {
-                    return false;
-                }
+            if (root.val >= min) {
+                return false;
             }
         }
 
         if (max != null) {
-            for (Integer integer : max) {
-                if (root.val <= integer) {
-                    return false;
-                }
+            if (root.val <= max) {
+                return false;
             }
         }
 
         if (root.left != null) {
-            List<Integer> mins = new ArrayList<>();
-            if (min != null) {
-                mins.addAll(min);
-            }
-            mins.add(root.val);
-            if (!check(root.left, mins, max)) {
+            if (!check(root.left, root.val, max)) {
                 return false;
             }
         }
 
         if (root.right != null) {
-            List<Integer> maxs = new ArrayList<>();
-            if (max != null) {
-                maxs.addAll(max);
-            }
-            maxs.add(root.val);
-            if (!check(root.right, min, maxs)){
+            if (!check(root.right, min, root.val)){
                 return false;
             }
         }
@@ -78,19 +64,13 @@ public class isValidBST {
     }
 
     public static boolean isValidBST(TreeNode root) {
-
-
         if (root.right != null) {
-            List<Integer> max = new ArrayList<>();
-            max.add(root.val);
-            if (!check(root.right, null, max)){
+            if (!check(root.right, null, root.val)){
                 return false;
             }
         }
         if (root.left != null) {
-            List<Integer> min = new ArrayList<>();
-            min.add(root.val);
-            if (!check(root.left, min, null)){
+            if (!check(root.left, root.val, null)){
                 return false;
             }
         }
