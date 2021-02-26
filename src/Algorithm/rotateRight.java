@@ -39,7 +39,7 @@ public class rotateRight {
         k = k % nodeList.size();
         if (k == 0) {
             return nodeList.get(0);
-        }
+        } 
         nodeList.get(nodeList.size() - 1).next = nodeList.get(0);
         if (k < nodeList.size()) {
             nodeList.get(nodeList.size() - 1 - k).next = null;
