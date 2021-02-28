@@ -1,8 +1,11 @@
 package Algorithm;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
+ * q54
  * 输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字。
  * 示例 1：
  * 输入：matrix = [[1,2,3],[4,5,6],[7,8,9]]
@@ -19,62 +22,64 @@ import java.util.Arrays;
  */
 public class spiralOrder {
 
-    public static int[] spiralOrder(int[][] matrix) {
-        int x_min = 0; int x_max = matrix.length;
-        if (x_max == 0) {
-            return new int[0];
-        }
-        int y_min = 0; int y_max = matrix[0].length;
-        if (y_max == 0) {
-            return new int[0];
-        }
-        int len = x_max * y_max;
-        x_max--;y_max--;
-        int[] list = new int[len];
-        int flag = 0;
-        int index = 0;
-        while (index < len) {
+    public static List<Integer> spiralOrder(int[][] matrix) {
+        int xMin = 0;
+        int xMax = matrix.length;
+        int yMin = 0;
+        int yMax = matrix[0].length;
+        int length = xMax * yMax;
+        List<Integer> result = new ArrayList<>();
+        int x = 0;
+        int y = 0;
+        int flag = 1;
+        result.add(matrix[x][y]);
+        while (true) {
+            if (result.size() == length) {
+                break;
+            }
             if (flag == 0) {
-                for (int i = y_min; i <= y_max; i++) {
-                    list[index++] = matrix[x_min][i];
+                if (x < xMax - 1) {
+                    x++;
+                    result.add(matrix[x][y]);
                 }
-                x_min++;
-//                x_min = Math.min(x_min, x_max);
-                flag = 1;
+                if (x == xMax - 1) {
+                    yMax--;//2
+                    flag = 3;
+                }
             } else if (flag == 1) {
-                for (int i = x_min; i <= x_max; i++) {
-                    list[index++] = matrix[i][y_max];
+                if (y < yMax - 1) {
+                    y++;
+                    result.add(matrix[x][y]);
                 }
-                y_max--;
-//                y_max = Math.max(y_max, y_max);
-                flag = 2;
+                if (y == yMax - 1) {
+                    flag = 0;
+                    xMin++;
+                }
             } else if (flag == 2) {
-                for (int i = y_max; i >= y_min; i--) {
-                    list[index++] = matrix[x_max][i];
+                x--;
+                result.add(matrix[x][y]);
+                if (x == xMin) {
+                    flag = 1;
+                    yMin++; //1
                 }
-                x_max--;
-//                x_max = Math.max(x_max, x_min);
-                flag = 3;
-            } else if (flag == 3) {
-                for (int i = x_max; i >= x_min; i--) {
-                    if (y_min >= y_max) {
-                        y_min = y_max;
-                    }
-                    list[index++] = matrix[i][y_min];
+            } else {
+                y--;
+                result.add(matrix[x][y]);
+                if (y == yMin) {
+                    flag = 2;
+                    xMax--;
                 }
-                y_min++;
-//                y_min = Math.min(y_max, y_min);
-                flag = 0;
             }
         }
-        return list;
+        return result;
     }
 
     public static void main(String[] args) {
-        int[][] matrix = new int[][]{{1,2,3,4}, {5,6,7,8}, {9,10,11,12}};
+//        int[][] matrix = new int[][]{{1,2,3,4}, {5,6,7,8}, {9,10,11,12}};
 //        int[][] matrix = new int[][]{{1,2,3}, {4,5,6}, {7,8,9}};
 //        int[][] matrix = new int[][]{{3}, {2}};
-        System.out.println(Arrays.asList(spiralOrder(matrix)).toString());
+        int[][] matrix = new int[][]{{3}};
+        System.out.println(spiralOrder(matrix));
 
     }
 }
