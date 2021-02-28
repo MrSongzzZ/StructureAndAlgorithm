@@ -25,28 +25,16 @@ import java.math.BigInteger;
 public class trailingZeroes {
 
     public static int trailingZeroes(int n) {
-        int result = 0;
-        int a = 0;
         int b = 0;
         while (n > 0) {
             int temp = n;
-            while (temp % 2 == 0) {
-                a ++;
-                temp = temp / 2;
-            }
-            temp = n;
             while (temp % 5 == 0) {
                 b ++;
                 temp = temp / 5;
             }
-            while (a >= 1 && b >= 1) {
-                result++;
-                a--;
-                b--;
-            }
             n = n -1;
         }
-        return result;
+        return b;
     }
 
     public static void main(String[] args) {
