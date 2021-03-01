@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Stack;
 
 /**
+ * q155
  *设计一个支持 push ，pop ，top 操作，并能在常数时间内检索到最小元素的栈。
  *
  * push(x) —— 将元素 x 推入栈中。
@@ -37,7 +38,6 @@ public class MinStack {
 
     Stack<Integer> stack = null;
     Stack<Integer> stack1 = null;
-    int min = Integer.MAX_VALUE;
     public MinStack() {
         stack = new Stack<>();
         stack1 = new Stack<>();
@@ -45,7 +45,7 @@ public class MinStack {
 
     public void push(int x) {
         stack.push(x);
-        min = Math.min(x, min);
+        int min = stack1.isEmpty() ? x : Math.min(x, stack1.peek());
         stack1.push(min);
     }
 
