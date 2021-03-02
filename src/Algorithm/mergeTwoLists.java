@@ -1,8 +1,7 @@
 package Algorithm;
 
-import struts.ListNode;
-
 /**
+ * q21
  * 输入两个递增排序的链表，合并这两个链表并使新链表中的节点仍然是递增排序的。
  * 示例1：
  *
@@ -16,58 +15,61 @@ import struts.ListNode;
 public class mergeTwoLists {
 
     public static ListNode mergeTwoLists(ListNode l1, ListNode l2) {
-        ListNode root = null;
         if (l1 == null) {
             return l2;
         }
         if (l2 == null) {
             return l1;
         }
-        if (l1.getVal() > l2.getVal()) {
-            root = l2;
-            l2 = l2.getNext();
+
+        ListNode head = null;
+        if (l1.val < l2.val) {
+            head = l1;
+            l1 = l1.next;
         } else {
-            root = l1;
-            l1 = l1.getNext();
+            head = l2;
+            l2 = l2.next;
         }
-
-        ListNode head = root;
-
+        ListNode result = head;
         while (l1 != null && l2 != null) {
-            if (l1.getVal() > l2.getVal()) {
-                root.setNext(l2);
-                l2 = l2.getNext();
+            if (l1.val < l2.val) {
+                head.next = l1;
+                l1 = l1.next;
             } else {
-                root.setNext(l1);
-                l1 = l1.getNext();
+                head.next = l2;
+                l2 = l2.next;
             }
-            root = root.getNext();
+            head = head.next;
         }
 
-        if (l1 != null) {
-            root.setNext(l1);
+        while (l1 != null) {
+            head.next = l1;
+            l1 = l1.next;
+            head = head.next;
         }
 
-        if (l2 != null) {
-            root.setNext(l2);
+        while (l2 != null) {
+            head.next = l2;
+            l2 = l2.next;
+            head = head.next;
         }
-        return head;
+        return result;
     }
 
     public static void main(String[] args) {
         ListNode l1 = null;
         ListNode l1Next = new ListNode(1);
         l1 = l1Next;
-        l1Next.setNext(new ListNode(2));
-        l1Next = l1Next.getNext();
-        l1Next.setNext(new ListNode(4));
+        l1Next.next = new ListNode(2);
+        l1Next = l1Next.next;
+        l1Next.next = new ListNode(4);
 
         ListNode l2 = null;
         ListNode l2Next = new ListNode(1);
         l2 = l2Next;
-        l2Next.setNext(new ListNode(3));
-        l2Next = l2Next.getNext();
-        l2Next.setNext(new ListNode(4));
-        mergeTwoLists(null, null);
+        l2Next.next = new ListNode(3);
+        l2Next = l2Next.next;
+        l2Next.next = new ListNode(4);
+        mergeTwoLists(l1, l2);
     }
 }
