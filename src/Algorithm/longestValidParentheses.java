@@ -25,51 +25,83 @@ public class longestValidParentheses {
 
     public static int longestValidParentheses(String s) {
 //        int result = 0;
+//        int x = s.length() % 2 == 0 ? s.length() : s.length() - 1;
 //        Stack<Character> stack = new Stack<>();
-//        for (int i = 0; i < s.length(); i++) {
-//            stack.clear();
-//            for (int j = i; j < s.length(); j++) {
-//                char temp = s.charAt(j);
-//                if (temp == '(') {
-//                    stack.push(temp);
-//                } else {
-//                    if (stack.isEmpty()) {
-//                        break;
-//                    }
-//                    char isV = stack.pop();
-//                    if (isV != '(') {
-//                        break;
+//        while (x > 0) {
+//            for (int i = 0; i + x <= s.length(); i++) {
+//                int j = i;
+//                for (; j < i + x; j++) {
+//                    char temp = s.charAt(j);
+//                    if (temp == '(') {
+//                        stack.push(temp);
+//                    } else {
+//                        if (stack.isEmpty()) {
+//                            break;
+//                        }
+//                        stack.pop();
 //                    }
 //                }
-//                if (stack.isEmpty()) {
-//                    result = Math.max(result, j + 1 - i);
+//                if (stack.isEmpty() && j == i + x) {
+//                    return x;
 //                }
+//                stack.clear();
 //            }
+//            x -= 2;
 //        }
 //        return result;
 
-        int result = 0;
-        int index = 0;
-        Stack<Character> stack = new Stack<>();
-        for (int j = 0; j < s.length(); j++) {
-            char temp = s.charAt(j);
-            if (temp == '(') {
-                stack.push(temp);
-            } else {
-                if (stack.isEmpty()) {
-                    result = Math.max(index, result);
-                    index = 0;
-                    continue;
-                }
-                char isV = stack.pop();
-                if (isV != '(') {
-                    result = Math.max(index, result);
-                    index = 0;
-                    continue;
-                }
-                result += 2;
-            }
+//        int maxLength = 0;
+//        int length = 0;
+//        Stack<Integer> integers = new Stack<>();
+//        integers.push(-1);
+//        for (int i = 0; i < s.length(); i++) {
+//            char temp = s.charAt(i);
+//            if (temp == '(') {
+//                integers.push(i);
+//            } else {
+//                int x = integers.pop();
+//                if (x < 0 || s.charAt(x) != '(') {
+//                    length = 0;
+//                    integers.push(i);
+//                } else {
+//                    length = i - integers.peek();
+//                    maxLength = Math.max(length, maxLength);
+//                }
+//            }
+//        }
+//        return maxLength;
 
+        int left = 0;
+        int right = 0;
+        int result = 0;
+        for (int i = 0; i < s.length(); i++) {
+            char temp = s.charAt(i);
+            if (temp == '(') {
+                left++;
+            } else if (temp == ')') {
+                right ++;
+            }
+            if (left == right) {
+                result = Math.max(result, left * 2);
+            } else if (right > left) {
+                left = right = 0;
+            }
+        }
+
+        left = 0;
+        right = 0;
+        for (int i = s.length() - 1; i >= 0; i--) {
+            char temp = s.charAt(i);
+            if (temp == ')') {
+                left++;
+            } else if (temp == '(') {
+                right++;
+            }
+            if (left == right) {
+                result = Math.max(result, left * 2);
+            } else if (right > left) {
+                left = right = 0;
+            }
         }
         return result;
     }
