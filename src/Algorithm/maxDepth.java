@@ -20,19 +20,11 @@ package Algorithm;
  */
 public class maxDepth {
 
-    int maxLength = 0;
     public int maxDepth(TreeNode root) {
-        getDepth(root, 0);
-        return maxLength;
-    }
-
-    public void getDepth(TreeNode root, int tempLength) {
-        if (root != null) {
-            tempLength++;
-            getDepth(root.left, tempLength);
-            getDepth(root.right, tempLength);
+        if (root == null) {
+            return 0;
         } else {
-            maxLength = Math.max(maxLength, tempLength);
+            return Math.max(maxDepth(root.left), maxDepth(root.right)) + 1;
         }
     }
 }
