@@ -38,30 +38,52 @@ public class countSquares {
     public static int countSquares(int[][] matrix) {
         int m = matrix.length;
         int n = matrix[0].length;
-        int l = Math.min(n, m);
         int result = 0;
-        int[][][] dp = new int[m][n][l];
-        for (int i = 0; i < l; i++) {
-            for (int x = 0; x + i < m; x++) {
-                for (int y = 0; y + i < n; y++) {
-                    if (i == 0) {
-                        if (matrix[x][y] == 1) {
-                            dp[x][y][0] = 1;
-                            result += 1;
-                        }
+        int[][] dp = new int[m][n];
+        for (int x = 0; x < m; x++) {
+            for (int y = 0; y < n; y++) {
+                if (matrix[x][y] == 0) {
+                    dp[x][y] = 0;
+                } else {
+                    if (x > 0 && y > 0) {
+                        dp[x][y] = 1 + Math.min(dp[x - 1][y], Math.min(dp[x][y - 1], dp[x - 1][y - 1]));
                     } else {
-                        if (dp[x][y][i - 1] == 1 && dp[x + 1][y][i - 1] == 1 && dp[x][y + 1][i - 1] == 1 && dp[x + 1][y + 1][i - 1] == 1) {
-                            dp[x][y][i] = 1;
-                            result += 1;
-                        } else {
-                            dp[x][y][i] = 0;
-                        }
+                        dp[x][y] = 1;
                     }
                 }
+                result += dp[x][y];
             }
         }
         return result;
     }
+
+//    public static int countSquares(int[][] matrix) {
+//        if (matrix.length < 1) {
+//            return 0;
+//        }
+//        int m = matrix.length;
+//        int n = matrix[0].length;
+//
+//        int[][] dp = new int[m][n];
+//
+//        int rs = 0;
+//        for (int i = 0; i < m; i++) {
+//            for (int j = 0; j < n; j++) {
+//                if (matrix[i][j] == 0) {
+//                    dp[i][j] = 0;
+//                } else {
+//                    if (i > 0 && j > 0) {
+//                        dp[i][j] = Math.min(Math.min(dp[i - 1][j], dp[i][j - 1]), dp[i - 1][j - 1]) + 1;
+//                    } else {
+//                        dp[i][j] = 1;
+//                    }
+//                    rs += dp[i][j];
+//                }
+//            }
+//        }
+//        return rs;
+//    }
+
 
     public static void main(String[] args) {
         System.out.println(countSquares(new int[][]{{0,1,1,1}, {1,1,1,1},{0,1,1,1}}));
