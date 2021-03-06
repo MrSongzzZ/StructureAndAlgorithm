@@ -27,16 +27,64 @@ import java.util.Stack;
  */
 public class calculate {
 
-    public int calculate(String s) {
-        int result = 0;
-        Stack<Character> stack = new Stack<>();
-        for (int i = 0; i < s.length(); i++) {
-            char temp = s.charAt(i);
-            if (temp == ' ') {
+    public static int calculate(String s) {
+        if (s.startsWith("-")) {
+            s = "0" + s;
+        }
+        int right = ')';
+        Stack<Integer> stack = new Stack<>();
+        int temp = 0;
+        int n = 1;
+        for (int i = s.length() - 1; i >= 0; i--) {
+            char cr = s.charAt(i);
+            if (cr == ' ') {
                 continue;
             }
 
+            if (cr >= '0' && cr <= '9') {
+                temp = (cr - '0') * n + temp;
+                n = n * 10;
+                continue;
+            }
+
+            if (n != 1) {
+                stack.push(temp);
+                temp = 0;
+                n = 1;
+            }
+
+            if (cr == '-') {
+                stack.push(-1);
+            } else if (cr == '+') {
+                stack.push(1);
+            } else if (cr == '(') {
+                int res = getNum(stack);
+                stack.pop();
+                stack.push(res);
+            } else if (cr == ')') {
+                stack.push(right);
+            }
+        }
+
+        if (n != 1) {
+            stack.push(temp);
+        }
+        return getNum(stack);
+    }
+
+    private static int getNum(Stack<Integer> stack) {
+        int result = 0;
+        while (!stack.isEmpty()) {
+            result = stack.pop();
+            break;
+        }
+        while (stack.size() > 1 && stack.peek() != ')') {
+            result += stack.pop() * stack.pop();
         }
         return result;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(calculate("-2"));
     }
 }
