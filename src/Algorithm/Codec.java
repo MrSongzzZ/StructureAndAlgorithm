@@ -1,11 +1,7 @@
 package Algorithm;
 
-import jdk.nashorn.internal.objects.NativeArray;
-import org.omg.PortableInterceptor.INACTIVE;
 
 import java.util.*;
-
-import static jdk.nashorn.internal.objects.NativeArray.join;
 
 /**
  * 请实现两个函数，分别用来序列化和反序列化二叉树。
