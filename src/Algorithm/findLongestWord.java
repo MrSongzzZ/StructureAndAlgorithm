@@ -34,6 +34,31 @@ public class findLongestWord {
     }
 
     public static String findLongestWord(String s, List<String> dictionary) {
+        String result = "";
+        for (String s1 : dictionary) {
+            if (s1.length() < result.length()) {
+                continue;
+            }
+            int i = 0;
+            int pi = 0;
+            while (i < s1.length() && pi < s.length()) {
+                if (s1.charAt(i) == s.charAt(pi)) {
+                    i++;
+                }
+                pi++;
+            }
+            if (i == s1.length()) {
+                if (s1.length() > result.length()) {
+                    result = s1;
+                } else {
+                    result = s1.compareTo(result) > 0 ? result : s1;
+                }
+            }
+        }
+        return result;
+    }
+
+    public static String findLongestWord1(String s, List<String> dictionary) {
         List<Dict> dictList = new ArrayList<>();
         String result = "";
         for (int i = 0; i < s.toCharArray().length; i++) {
@@ -81,7 +106,8 @@ public class findLongestWord {
     }
 
     public static void main(String[] args) {
-        System.out.println(findLongestWord("abpcplea", Arrays.asList(new String[]{"ale", "apple", "monkey", "plea"})));
-        System.out.println(findLongestWord("abpcplea", Arrays.asList(new String[]{"a","b","c"})));
+//        System.out.println(findLongestWord("abpcplea", Arrays.asList(new String[]{"ale", "apple", "monkey", "plea"})));
+//        System.out.println(findLongestWord("abpcplea", Arrays.asList(new String[]{"a","b","c"})));
+        System.out.println(findLongestWord("aaa", Arrays.asList(new String[]{"aaa","aa","a"})));
     }
 }
